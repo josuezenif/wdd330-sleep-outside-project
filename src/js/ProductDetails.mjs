@@ -16,7 +16,7 @@ export default class ProductDetails {
 
     addProductToCart(product) {
         const productList = getLocalStorage("so-cart") || [];
-        productList.push(product);
+        productList.push(this.product);
         setLocalStorage("so-cart", productList);
     }
 
@@ -26,7 +26,7 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-    document.querySelector('h2').textContent = product.Brand.name
+    document.querySelector('h2').textContent = product.Brand.name;
     document.querySelector('h3').textContent = product.NameWithoutBrand;
 
     const productImage = document.getElementById('productImage');

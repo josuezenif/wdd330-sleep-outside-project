@@ -33,7 +33,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
   const htmlStrings = list.map(templateFn);
 
   //clear element if true
-  if (clear == true) {
+  if (clear) {
     parentElement.innerHTML = "";
   }
 
