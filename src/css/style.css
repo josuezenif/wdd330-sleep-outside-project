@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -260,4 +260,21 @@ button {
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.categories div {
+  width: 50%;
+  height: 50%;
+  text-align: center;
+}
+
+.categories div a {
+  text-decoration: none;
+  color: #000;
 }
