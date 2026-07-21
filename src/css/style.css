@@ -278,3 +278,19 @@ footer {
   text-decoration: none;
   color: #000;
 }
+
+.product-wish-list {
+  margin-bottom: 1.5em;
+}
+
+.wishlist section li {
+  text-decoration: none;
+  color: #000;
+  /* margin-left: 2em; */
+  text-align: center;
+}
+
+.wishlist section li a h2 {
+  color: #000;
+  text-decoration: none;
+}
