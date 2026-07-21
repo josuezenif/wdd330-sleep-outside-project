@@ -21,11 +21,12 @@ export default class ProductDetails {
     }
 
     renderProductDetails() {
-        productDetailsTemplate(this.product);
+        const results = productDetailsTemplate(this.product);
+        document.querySelector(".divider-main").innerHTML = results;
     }
 }
 
-function productDetailsTemplate(product) {
+export function productDetailsTemplate(product) {
     return `<section class="product-detail">
     <h3>${product.Brand.Name}</h3>
     <h2 class="divider">${product.NameWithoutBrand}</h2>
@@ -39,6 +40,7 @@ function productDetailsTemplate(product) {
     <p class="product__description">
     ${product.DescriptionHtmlSimple}
     </p>
+
     <div class="product-detail__add">
       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
     </div></section>`;

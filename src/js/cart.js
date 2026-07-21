@@ -1,4 +1,7 @@
 import { getLocalStorage } from "./utils.mjs";
+import ProductList from "./ProductList.mjs";
+import ProductData from "./ProductData.mjs";
+import { getParam } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
@@ -26,3 +29,40 @@ function cartItemTemplate(item) {
 }
 
 renderCartContents();
+
+function cartItemTemplate2(item) {
+  console.log(Array.isArray(item));
+  const newItem = `<li class="cart-card divider">
+  <a href="#" class="cart-card__image">
+    <img
+      src="${item.product.Image}"
+      alt="${item.product.Name}"
+    />
+  </a>
+  <a href="#">
+    <h2 class="card__name">${item.product.Name}</h2>
+  </a>
+  <p class="cart-card__color">${item.product.Colors[0].ColorName}</p>
+  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__price">$${item.product.FinalPrice}</p>
+</li>`;
+
+  return newItem;
+}
+
+// WISH LIST TO CART INDEX HTML
+function renderWishlist() {
+  const wishlist = getLocalStorage("wishlist") || [];
+
+  const container = document.getElementById("wish-list");
+
+  wishlist.forEach(product => {
+    const section = document.createElement("section");
+    const template = cartItemTemplate2(product);
+
+    section.innerHTML = template;
+    container.appendChild(section);
+  });
+
+}
+renderWishlist();
