@@ -31,7 +31,6 @@ function cartItemTemplate(item) {
 renderCartContents();
 
 function cartItemTemplate2(item) {
-  console.log(Array.isArray(item));
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
