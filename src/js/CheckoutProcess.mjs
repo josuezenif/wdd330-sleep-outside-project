@@ -1,4 +1,32 @@
 import { getLocalStorage } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs";
+
+const services = new ExternalServices();
+
+function formDataToJSON(formElement) {
+    // convert the form data to a JSON object
+    const formData = new FormData(formElement);
+    const convertedJSON = {};
+
+    formData.forEach((value, key) => {
+        convertedJSON[key] = value;
+    });
+    return convertedJSON;
+}
+
+function packageItems(items) {
+    const simplifiesItems = items.map((item) => {
+        console.log(item);
+        return {
+            id: item.Id,
+            price: item.FinalPrice,
+            name: item.Name,
+            quantity: 1
+        };
+    });
+    return simplifiesItems;
+}
+
 
 export default class CheckoutProcess {
     constructor(key, outputSelector) {
@@ -12,11 +40,15 @@ export default class CheckoutProcess {
     }
 
     init() {
+        this.list = getLocalStorage(this.key);
         this.displayOrderDetails();
-        // this.list = getLocalStorage(this.key);
-        // this.calculateItemSummary();
     }
 
+
+    totalItemsInCart() {
+        const cartItems = getLocalStorage("so-cart") || [];
+        return cartItems.length;
+    }
 
     // ------------------- SUBTOTAL COST -----------------
     calculateItemSubtotal() {
@@ -41,7 +73,7 @@ export default class CheckoutProcess {
     // ------------------- TAX COST -----------------
     calculateTaxTotal() {
         const cartItems = getLocalStorage("so-cart") || [];
-        const tax = 0.06;
+        this.tax = 0.06;
         let subtotal = 0;
 
         cartItems.forEach(item => {
@@ -49,35 +81,33 @@ export default class CheckoutProcess {
             subtotal += price;
         });
 
-        const priceTax = subtotal * tax;
-        const finalPrice = subtotal + priceTax;
+        const priceTax = subtotal * this.tax;
 
-        return finalPrice;
-        // document.querySelector('#tax').textContent = finalPrice;
+        return priceTax;
     }
 
     // ------------------- SHIPPING COST -----------------
     calculateShippingCost() {
         const cartItems = getLocalStorage("so-cart") || [];
-        let shippingCost = 0;
+        this.shipping = 0;
 
         if (cartItems.length === 0) {
-            shippingCost = 0;
+            this.shipping = 0;
         }
 
         else {
             cartItems.forEach((item, index) => {
                 if (index === 0) {
-                    shippingCost += 10;
+                    this.shipping += 10;
                 }
 
                 else {
-                    shippingCost += 2;
+                    this.shipping += 2;
                 }
             });
         }
 
-        return shippingCost;
+        return this.shipping;
     }
 
     // ------------------- TOTAL ORDER COST -----------------
@@ -87,110 +117,45 @@ export default class CheckoutProcess {
         const tax = this.calculateTaxTotal();
         const shippingCost = this.calculateShippingCost();
 
-        const totalPrice = subtotal + tax + shippingCost;
+        this.orderTotal = subtotal + tax + shippingCost;
 
-        return totalPrice;
+        return this.orderTotal;
     }
 
     // ------------------- DISPLAYING COSTS TO PAGE -----------------
 
     displayOrderDetails() {
+        const countItems = this.totalItemsInCart();
         const subtotal = this.calculateItemSubtotal();
         const tax = this.calculateTaxTotal();
         const shippingCost = this.calculateShippingCost();
         const totalPrice = this.calculateOrderTotal();
 
-        document.querySelector('#subtotal').innerHTML = subtotal;
-        document.querySelector('#tax').innerHTML = tax;
-        document.querySelector('#shipping-cost').innerHTML = shippingCost;
+        document.querySelector('#totalItems').innerHTML = countItems;
+        document.querySelector('#subtotal').innerHTML = '$' + subtotal;
+        document.querySelector('#tax').innerHTML = '$' + tax.toFixed(2);
+        document.querySelector('#shipping-cost').innerHTML = '$' + shippingCost;
         document.querySelector("#total-price").innerHTML = `$${totalPrice.toFixed(2)}`;
     }
+
+    async checkout() {
+        const formElement = document.forms["checkout"];
+        const order = formDataToJSON(formElement);
+
+        order.orderDate = new Date().toISOString();
+        order.orderTotal = this.orderTotal;
+        order.tax = this.tax;
+        order.shipping = this.shipping;
+        order.items = packageItems(this.list);
+        console.log(order); // <<-------------- INFORMATION OF THE CLIENT WITH EVERYTHING THEY ORDERED
+
+        try {
+            const response = await services.checkout(order); // checkout(order) is not a function
+            console.log(response);
+        }
+
+        catch (err) {
+            console.log(err);
+        }
+    }
 }
-
-// ------------------- SUBTOTAL COST -----------------
-// function calculateItemSubtotal() {
-//     const cartItems = getLocalStorage("so-cart");
-
-//     if (cartItems && cartItems.length > 0) {
-
-//         //calculates the total with FinalPrice of each one
-//         const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
-
-//         return total;
-
-//         // const review = document.querySelector(".review");
-//     }
-
-//     else {
-//         //in case the cart is empty
-//         document.querySelector(".review").innerHTML = "No items in cart";
-//     }
-// }
-
-// // ------------------- TAX COST -----------------
-// function calculateTaxTotal() {
-//     const cartItems = getLocalStorage("so-cart") || [];
-//     const tax = 0.06;
-//     let subtotal = 0;
-
-//     cartItems.forEach(item => {
-//         const price = item.FinalPrice;
-//         subtotal += price;
-//     });
-
-//     const priceTax = subtotal * tax;
-//     const finalPrice = subtotal + priceTax;
-
-//     return finalPrice;
-//     // document.querySelector('#tax').textContent = finalPrice;
-// }
-
-// // ------------------- SHIPPING COST -----------------
-// function calculateShippingCost() {
-//     const cartItems = getLocalStorage("so-cart") || [];
-//     let shippingCost = 0;
-
-//     if (cartItems.length === 0) {
-//         shippingCost = 0;
-//     }
-
-//     else {
-//         cartItems.forEach((item, index) => {
-//             if (index === 0) {
-//                 shippingCost += 10;
-//             }
-
-//             else {
-//                 shippingCost += 2;
-//             }
-//         });
-//     }
-
-//     return shippingCost;
-// }
-
-// // ------------------- TOTAL ORDER COST -----------------
-
-// function calculateOrderTotal() {
-//     const subtotal = this.calculateItemSubtotal();
-//     const tax = this.calculateTaxTotal();
-//     const shippingCost = this.calculateShippingCost();
-
-//     const totalPrice = subtotal + tax + shippingCost;
-
-//     return totalPrice;
-// }
-
-// // ------------------- DISPLAYING COSTS TO PAGE -----------------
-
-// function displayOrderDetails() {
-//     const subtotal = this.calculateItemSubtotal();
-//     const tax = this.calculateTaxTotal();
-//     const shippingCost = this.calculateShippingCost();
-//     const totalPrice = this.calculateOrderTotal();
-
-//     document.querySelector('#subtotal').innerHTML = subtotal;
-//     document.querySelector('#tax').innerHTML = tax;
-//     document.querySelector('#shipping-cost').innerHTML = shippingCost;
-//     document.querySelector("#total-price").innerHTML = `$${totalPrice.toFixed(2)}`;
-// }

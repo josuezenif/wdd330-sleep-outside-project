@@ -3,7 +3,7 @@
 // const productList = new ProductList("tents", productData, element);
 // productList.init();
 
-import ProductData from './ProductData.mjs';
+import ExternalServices from './ExternalServices.mjs';
 import ProductList from './ProductList.mjs';
 import { getParam } from './utils.mjs';
 
@@ -14,7 +14,7 @@ import { getParam } from './utils.mjs';
 const category = getParam('category');
 
 // first create an instance of the ProductData class.
-const dataSource = new ProductData();
+const dataSource = new ExternalServices();
 
 // then get the element you want the product list to render in
 const listElement = document.querySelector('.product-list');

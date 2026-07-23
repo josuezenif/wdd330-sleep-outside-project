@@ -10,22 +10,20 @@
   <title>Sleep Outside | Checkout</title>
 
   <link rel="stylesheet" href="../css/style.css">
-  <!-- <script src="../js/CheckoutProcess.js" type="module"></script> -->
+  <script src="../js/checkout.js" type="module"></script>
 </head>
 
 <body>
   <header class="divider">
     <div class="logo">
-      <img src="images/noun_Tent_2517.svg" alt="tent image for logo">
+      <img src="/images/noun_Tent_2517.svg" alt="tent image for logo">
 
-      <a href="index.html">
-        Sleep
-        <span class="highlight">Outside</span>
+      <a href="/index.html">Sleep<span class="highlight">Outside</span>
       </a>
     </div>
 
     <div class="cart">
-      <a href="cart/">
+      <a href="/cart/index.html">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           <path
             d="M18.9 32.6c1.1 2.4 2.5 3.3 5.4 3.3 1.6 0 3.6-0.3 5.9-0.6 3.2-0.5 6.9-1 11.2-1 2.1 0 4.3 0.1 6.4 0.3 2.1 0.1 4.2 0.3 6.1 0.3 3.2 0 5.2-0.4 5.9-1.2 2.7-2.7 2.8-8.8 2.9-14.6 0.1-6.7 0.2-14.5 4.6-18.7 -0.5 0-1 0-1.6 0 -14.2 0-37.5 0-41.1 0C15.6 6.2 14.9 23.6 18.9 32.6z" />
@@ -57,57 +55,58 @@
       <h2>Review & Place your Order</h2>
     </section>
 
-    <section class="review">
+    <fieldset class="checkout-summary">
+      <legend>Order Summary</legend>
+      <p>Total Items: <span id="totalItems"></span></p>
       <p>Subtotal: <span id="subtotal"></span></p>
       <p>Tax: <span id="tax"></span></p>
       <p>Shipping cost: <span id="shipping-cost"></span></p>
       <p>Total: <span id="total-price"></span></p>
+    </fieldset>
 
-    </section>
-
-    <form action="/checkout/index.html">
+    <form for="checkout" name="checkout" class="checkout-form" method="post" action="review.html">
       <div class="contact">
-        <label for="firstName">First name</label>
+        <label for="firstName">First name *</label>
         <input type="text" name="firstName" id="firstName" required>
 
-        <label for="lastName">Last Name</label>
+        <label for="lastName">Last Name *</label>
         <input type="text" name="lastName" id="lastName" required>
       </div>
 
       <div class="address">
         <!--------------- STREET ADDRESS ---------------->
-        <label for="address">Street Address</label>
+        <label for="address">Street Address *</label>
         <input type="text" name="address" id="address" required>
 
         <!--------------------- CITY  ------------------->
-        <label for="city">City</label>
+        <label for="city">City *</label>
         <input type="text" name="city" id="city" required>
 
         <!--------------------- STATE ------------------->
-        <label for="state">State</label>
+        <label for="state">State *</label>
         <input type="text" name="state" id="state" required>
 
         <!---------------------- ZIP CODE ---------------->
-        <label for="zip">Zip Code</label>
+        <label for="zip">Zip Code *</label>
         <input type="text" name="zip" id="zip" required>
       </div>
 
       <div class="payment">
 
         <!------------------------ CREDIT CARD NUMBER -------------------->
-        <label for="credit-card">Credit Card Number</label>
-        <input type="number" name="credit-card" id="credit-card" required minlength="15">
+        <label for="credit-card">Credit Card Number *</label>
+        <input type="text" name="credit-card" id="credit-card" required>
 
         <!------------------------ EXPIRE DATE -------------------->
-        <label for="expire-date">Expiration Date</label>
-        <input type="date" name="expire-date" id="expire-date" required>
+        <label for="expire-date">Expiration Date *</label>
+        <input type="text" name="expire-date" id="expire-date" required>
 
         <!------------------------ SECURITY CODE -------------------->
-        <label for="sec-code">CVC number</label>
-        <input type="number" name="sec-code" id="sec-code" required>
+        <label for="code">CVV number *</label>
+        <input type="text" name="sec-code" id="sec-code" required>
       </div>
 
-      <button type="submit" class="checkout-button">Pay now!</button>
+      <button type="submit" class="checkout-btn" id="checkoutSubmit">Checkout Now!</button>
     </form>
 
   </main>

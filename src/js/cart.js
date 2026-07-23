@@ -1,6 +1,6 @@
 import { getLocalStorage } from "./utils.mjs";
 import ProductList from "./ProductList.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import { getParam } from "./utils.mjs";
 
 function renderCartContents() {
