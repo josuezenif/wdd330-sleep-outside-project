@@ -108,6 +108,7 @@ button {
   border: 0;
   font-size: var(--large-font);
   cursor: pointer;
+  margin-bottom: 3em;
 }
 
 .divider {
@@ -293,4 +294,24 @@ footer {
 .wishlist section li a h2 {
   color: #000;
   text-decoration: none;
+}
+
+.check-out {
+  text-align: center;
+}
+
+.check-out a {
+  background-color: #8a470c;
+  border: 1.3px solid #4d2d11;
+  border-radius: 0.2em;
+  max-width: fit-content;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 12px;
+}
+
+.check-out a:hover {
+  cursor: pointer;
+  background-color: #b16726;
+
 }
