@@ -1,12 +1,30 @@
 import { getLocalStorage } from "./utils.mjs";
 import ProductList from "./ProductList.mjs";
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import { getParam } from "./utils.mjs";
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart");
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  if (cartItems && cartItems.length > 0) {
+    const htmlItems = cartItems.map((item) => cartItemTemplate(item));
+    document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+    //calculates the total with FinalPrice of each one
+    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+
+    const cartFooter = document.querySelector(".cart-footer");
+    console.log(total);
+    document.querySelector(".cart-total").innerHTML =
+      `Total: $${total.toFixed(2)}`;
+    cartFooter.classList.remove("hide");
+  }
+
+  else {
+    //in case the cart is empty
+    document.querySelector(".product-list").innerHTML = "";
+    document.querySelector(".cart-footer").classList.add("hide");
+  }
 }
 
 function cartItemTemplate(item) {
@@ -31,7 +49,6 @@ function cartItemTemplate(item) {
 renderCartContents();
 
 function cartItemTemplate2(item) {
-  console.log(Array.isArray(item));
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img

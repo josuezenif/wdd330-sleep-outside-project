@@ -12,6 +12,22 @@
   --font-base: 18px;
   --small-font: 0.8em;
   --large-font: 1.2em;
+
+  /* --------------------------- FORM CSS VARIABLES --------------------- */
+  --primary: #d97706;
+  /* naranja cálido */
+  --primary-light: #f59e0b;
+  /* naranja claro */
+  --brown: #5c3d2e;
+  /* café */
+  --brown-light: #8b5e3c;
+  --bg: #fefae0;
+  /* crema */
+  --white: #ffffff;
+  --border: #e5e5e5;
+  --text: #2c2c2c;
+  --success: #3a7d44;
+
 }
 
 * {
@@ -108,6 +124,7 @@ button {
   border: 0;
   font-size: var(--large-font);
   cursor: pointer;
+  margin-bottom: 3em;
 }
 
 .divider {
@@ -293,4 +310,167 @@ footer {
 .wishlist section li a h2 {
   color: #000;
   text-decoration: none;
+}
+
+.check-out {
+  text-align: center;
+}
+
+.check-out a {
+  background-color: #8a470c;
+  border: 1.3px solid #4d2d11;
+  border-radius: 0.2em;
+  max-width: fit-content;
+  text-decoration: none;
+  color: #fff;
+  padding: 8px 12px;
+}
+
+.check-out a:hover {
+  cursor: pointer;
+  background-color: #b16726;
+}
+
+/* ------------------------------ CSS PARA EL FORMS CHECKOUT ---------------------- */
+.checkout-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Inter', sans-serif;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.checkout-form input:hover,
+.checkout-form select:hover {
+  border-color: var(--primary-light);
+}
+
+/* Focus */
+.checkout-form input:focus,
+.checkout-form select:focus,
+.checkout-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.2);
+}
+
+.checkout-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--primary);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.checkout-btn:hover {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+/* Active */
+.checkout-btn:active {
+  transform: scale(0.98);
+}
+
+/* CHECKOUT SUMMARY INFORMATION */
+
+.checkout-summary {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(to bottom, #fff, #fef2e0);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-summary legend {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--brown);
+  padding: 0 0.5rem;
+}
+
+.checkout-summary p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.checkout-summary span {
+  font-weight: 600;
+  color: var(--brown);
+}
+
+.checkout-summary p:not(:last-child) {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.4rem;
+}
+
+#total-price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.checkout-summary p:last-child {
+  margin-top: 1rem;
+  padding-top: 0.6rem;
+  border-top: 2px solid var(--primary-light);
+}
+
+#shipping-cost {
+  color: var(--primary-light);
+}
+
+.checkout-summary p:hover {
+  background: rgba(217, 119, 6, 0.05);
+  border-radius: 6px;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+  transition: 0.2s;
+}
+
+@media (max-width: 600px) {
+  .checkout-summary {
+    padding: 1.2rem;
+  }
+
+  .checkout-summary p {
+    font-size: 0.95rem;
+  }
+}
+
+.thank-you {
+  text-align: center;
+
 }
