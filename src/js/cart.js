@@ -99,26 +99,8 @@ function removeItem(productId) {
 
 const cartItems = getLocalStorage('so-cart') || [];
 
-// cartItems.forEach((item) => {
-//   // const button = document.createElement('button');
-//   // button.textContent = "Remove";
-
-//   const button = document.querySelector('.remove-btn');
-
-//   button.addEventListener('click', () => {
-//     removeItem(item.Id);
-
-//     // render new cart
-//     const cartTemplate = cartItemTemplate(item);
-//     document.querySelector('.product-list').innerHTML = cartTemplate;
-//   });
-
-//   const container = document.querySelector('.removeButton');
-//   container.appendChild(button);
-// });
-
 function removeItemFromCart() {
-  const buttons = document.querySelectorAll('.remove-btn');
+  const buttons = document.querySelectorAll('.remove-btn'); // querySelectorAll() -----> Returns an array!!
 
   buttons.forEach(button => {
     button.addEventListener('click', () => {
