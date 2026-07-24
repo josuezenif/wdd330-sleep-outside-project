@@ -65,7 +65,7 @@
       <p class="review"></p>
     </fieldset>
 
-    <form action="success.html" for="checkout" name="checkout" class="checkout-form" method="post">
+    <form action="success.html" for="checkout" name="checkout" id="checkout" class="checkout-form" method="post">
       <div class="contact">
         <label for="firstName">First name *</label>
         <input type="text" name="firstName" id="firstName" required minlength="14">
@@ -103,7 +103,7 @@
         <input type="text" name="expire-date" id="expire-date" required>
 
         <!------------------------ SECURITY CODE -------------------->
-        <label for="code">CVV number *</label>
+        <label for="sec-code">CVV number *</label>
         <input type="text" name="sec-code" id="sec-code" required minlength="3" maxlength="3">
       </div>
 
