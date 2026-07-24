@@ -62,12 +62,13 @@
       <p>Tax: <span id="tax"></span></p>
       <p>Shipping cost: <span id="shipping-cost"></span></p>
       <p>Total: <span id="total-price"></span></p>
+      <p class="review"></p>
     </fieldset>
 
-    <form for="checkout" name="checkout" class="checkout-form" method="post" action="review.html">
+    <form action="success.html" for="checkout" name="checkout" class="checkout-form" method="post">
       <div class="contact">
         <label for="firstName">First name *</label>
-        <input type="text" name="firstName" id="firstName" required>
+        <input type="text" name="firstName" id="firstName" required minlength="14">
 
         <label for="lastName">Last Name *</label>
         <input type="text" name="lastName" id="lastName" required>
@@ -95,7 +96,7 @@
 
         <!------------------------ CREDIT CARD NUMBER -------------------->
         <label for="credit-card">Credit Card Number *</label>
-        <input type="text" name="credit-card" id="credit-card" required>
+        <input type="text" name="credit-card" id="credit-card" required minlength="12">
 
         <!------------------------ EXPIRE DATE -------------------->
         <label for="expire-date">Expiration Date *</label>
@@ -103,7 +104,7 @@
 
         <!------------------------ SECURITY CODE -------------------->
         <label for="code">CVV number *</label>
-        <input type="text" name="sec-code" id="sec-code" required>
+        <input type="text" name="sec-code" id="sec-code" required minlength="3" maxlength="3">
       </div>
 
       <button type="submit" class="checkout-btn" id="checkoutSubmit">Checkout Now!</button>
