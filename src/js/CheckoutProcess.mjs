@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -15,7 +15,7 @@ function formDataToJSON(formElement) {
 }
 
 function packageItems(items) {
-    const simplifiesItems = items.map((item) => {
+    const simplifiedItems = items.map((item) => {
         console.log(item);
         return {
             id: item.Id,
@@ -24,7 +24,7 @@ function packageItems(items) {
             quantity: 1
         };
     });
-    return simplifiesItems;
+    return simplifiedItems;
 }
 
 
@@ -125,20 +125,33 @@ export default class CheckoutProcess {
     // ------------------- DISPLAYING COSTS TO PAGE -----------------
 
     displayOrderDetails() {
+        const cartItems = getLocalStorage('so-cart');
+
         const countItems = this.totalItemsInCart();
         const subtotal = this.calculateItemSubtotal();
         const tax = this.calculateTaxTotal();
         const shippingCost = this.calculateShippingCost();
         const totalPrice = this.calculateOrderTotal();
 
-        document.querySelector('#totalItems').innerHTML = countItems;
-        document.querySelector('#subtotal').innerHTML = '$' + subtotal;
-        document.querySelector('#tax').innerHTML = '$' + tax.toFixed(2);
-        document.querySelector('#shipping-cost').innerHTML = '$' + shippingCost;
-        document.querySelector("#total-price").innerHTML = `$${totalPrice.toFixed(2)}`;
+        if (cartItems.length > 0) {
+            document.querySelector('#totalItems').innerHTML = countItems;
+            document.querySelector('#subtotal').innerHTML = '$' + subtotal.toFixed(2);
+            document.querySelector('#tax').innerHTML = '$' + tax.toFixed(2);
+            document.querySelector('#shipping-cost').innerHTML = '$' + shippingCost.toFixed(2);
+            document.querySelector("#total-price").innerHTML = `$${totalPrice.toFixed(2)}`;
+        }
+
+        else if (cartItems.length == 0) {
+            document.querySelector('#totalItems').innerHTML = "0";
+            document.querySelector('#subtotal').innerHTML = '$0';
+            document.querySelector('#tax').innerHTML = '$0';
+            document.querySelector('#shipping-cost').innerHTML = '$0';
+            document.querySelector("#total-price").innerHTML = `$0`;
+        }
     }
 
     async checkout() {
+
         const formElement = document.forms["checkout"];
         const order = formDataToJSON(formElement);
 
@@ -150,11 +163,18 @@ export default class CheckoutProcess {
         console.log(order); // <<-------------- INFORMATION OF THE CLIENT WITH EVERYTHING THEY ORDERED
 
         try {
-            const response = await services.checkout(order); // checkout(order) is not a function
+            const response = await services.checkout(); // checkout(order) is not a function
             console.log(response);
+            setLocalStorage('so-cart', []);
+            location.assign('/checkout/success.html')
         }
 
         catch (err) {
+            removeAllAlerts();
+            for (let message of err.message) {
+                alertMessage(err.message[message]);
+            }
+
             console.log(err);
         }
     }

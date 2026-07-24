@@ -29,9 +29,9 @@ function renderCartContents() {
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
-  <a href="#" class="cart-card__image">
+  <a href="/product_pages/?products=${item.Id}" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${item.Images.PrimarySmall}"
       alt="${item.Name}"
     />
   </a>
@@ -52,7 +52,7 @@ function cartItemTemplate2(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.product.Image}"
+      src="${item.product.Images.PrimarySmall}"
       alt="${item.product.Name}"
     />
   </a>
